@@ -1,10 +1,12 @@
 import random
-
+from turtle import pos
+import hangman_words as words
+import hangman_art as art 
 
 ## PREPS
-word_list = ["ardvark", "baboon", "camel"]
+#word_list = ["ardvark", "baboon", "camel"]
 
-chosen_word = random.choice(word_list)
+chosen_word = random.choice(words.word_list)
 word_length = len(chosen_word)
 
 print(f'Psst, the chosen word is {chosen_word}')
@@ -16,23 +18,30 @@ for _ in range(word_length):
 
 ## GAME
 
-chances = 5
+chances = 6
 end_of_game = False
 lost = False
 
+print(art.logo)
+print(art.stages[chances])
+print(display)
 
-## ( display.__contains__('_') or chances <= 0 )
 while not end_of_game:
     guess = input('Guess a letter: ')
     found = False
     for position in range(word_length):
         letter = chosen_word[position]
+
         if letter == guess:
             display[position] = letter
+
+            if (display[position] == letter):
+                print('You have already tried the letter ', letter)
             found = True
     if (not found):
         chances -= 1
         print(chances)
+    print(art.stages[chances])
     print(display)
 
     if "_" not in display:

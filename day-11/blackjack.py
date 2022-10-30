@@ -28,67 +28,38 @@ def draw_card():
     cards.remove(drawed)
     return drawed
 
-
 def sum(cards_array):
     final_value = 0
     for card in cards_array:
         final_value += card
     return final_value
 
-def check_winner(player_sum, computer_sum):
-    ## result: player win, machine win or draw
-
-    ## player win = closest to 21 or machine passes 21, player != machine
-    ## machine win = closest to 21 or player passes 21, machine player
-    ## draw = both lose or both has the same value
-
-    player_won = False
-    machine_won = False
-    draw = False
-
-    if (player_sum == computer_sum or (player_sum > 21 and computer_sum > 21)):
-        print('draw')
-        draw = True
-    elif player_sum > 21:
-        print('psum')
-        player_won = False
-    elif computer_sum > 21:
-        print('csum')
-        computer_won = False
-    elif (21 - player_sum) < (21 - computer_sum):
-        print('pwon')
-        player_won = True
-    else:
-        print('mwon')
-        machine_won = True
-    
-    if player_won: return 'player won'
-    elif machine_won: return 'machine won'
-    else: return 'draw'
-
-# computer_cards = [ draw_card(), draw_card() ]
-# player_cards = [ draw_card(), draw_card() ]
-
-
-# player_cards_sum = sum(player_cards)
-# computer_cards_sum = sum(computer_cards)
-
-# winner = check_winner(player_cards_sum, computer_cards_sum)
-# print(f'Computer cards: {computer_cards}, Player cards: {player_cards}')
-# print(f'Player sum: {player_cards_sum}, Machine sum: {computer_cards_sum}, Result: {winner}')
+def find_winner(player_score, machine_score):
+    if player_score > 21 and machine_score > 21 or player_score == machine_score:
+        return 'draw'
+    elif player_score > machine_score and player_score <= 21 or machine_score > 21:
+        return 'player won'
+    elif machine_score > player_score and machine_score <= 21 or player_score > 21:
+        return 'machine won'
 
 
 while True:
     print(logo)
     player_cards = [ draw_card(), draw_card() ]
     computer_cards = [ draw_card(), draw_card() ]
-    print(f'Your cards: {player_cards}\nComputer\'s first card: {computer_cards[0]}')
+    print(f'Your cards: {player_cards} \nComputer\'s first card: {computer_cards[0]}')
 
-    another = input('Draw another card? (y/n)').lower()
 
-    if (another == 'y'):
-        player_cards.append(draw_card())
-        print(f'Your cards: {player_cards}')
+    keep_drawing = True
+    while keep_drawing:
+
+        another = input('Draw another card? (y/n): ').lower()
+
+        if (another == 'y'):
+            player_cards.append(draw_card())
+            print(f'Your cards: {player_cards}')
+        else:
+            keep_drawing = False
     
     computer_cards_sum = sum(computer_cards)
     
@@ -98,7 +69,7 @@ while True:
         computer_cards_sum = sum(computer_cards)
 
     player_cards_sum = sum(player_cards)
-    winner = check_winner(player_cards_sum, computer_cards_sum)
+    winner = find_winner(player_cards_sum, computer_cards_sum)
     print(f'Computer cards: {computer_cards}, Player cards: {player_cards}')
     print(f'Player sum: {player_cards_sum}, Machine sum: {computer_cards_sum}, Result: {winner}')
     break

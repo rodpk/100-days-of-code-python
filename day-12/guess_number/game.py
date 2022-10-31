@@ -1,9 +1,9 @@
 ######## NUMBER GUESSING GAME #############
-from ast import expr_context
+from art import logo
 import random
 import logic
 
-print("********************************************")
+print(logo)
 print("*** Welcome to the Number Guessing Game! ***")
 print("I'm thinking of a number between 1 and 100.")
 
@@ -34,5 +34,3 @@ if player_won:
     print(f"Well done, the number I was thinking is {number}. You have found it in {attempts} attempts in {difficulty} difficulty")
 else:
     print(f"It's a shame, you could not find the number I was thinking about the number {number}")
-print("********************************************")
-print('')

@@ -28,7 +28,7 @@ def draw_card():
     cards.remove(drawed)
     return drawed
 
-def sum(cards_array):
+def calculate_score(cards_array):
     final_value = 0
     for card in cards_array:
         final_value += card
@@ -42,8 +42,9 @@ def find_winner(player_score, machine_score):
     elif machine_score > player_score and machine_score <= 21 or player_score > 21:
         return 'machine won'
 
+play_again = True
 
-while True:
+while play_again:
     print(logo)
     player_cards = [ draw_card(), draw_card() ]
     computer_cards = [ draw_card(), draw_card() ]
@@ -57,19 +58,30 @@ while True:
 
         if (another == 'y'):
             player_cards.append(draw_card())
-            print(f'Your cards: {player_cards}')
+            print(f'Your cards: {player_cards} - Sum: {calculate_score(player_cards)}')
         else:
             keep_drawing = False
     
-    computer_cards_sum = sum(computer_cards)
+    computer_cards_sum = calculate_score(computer_cards)
     
     
     if (computer_cards_sum < 21 or computer_cards_sum < 17):
         computer_cards.append(draw_card())
-        computer_cards_sum = sum(computer_cards)
+        computer_cards_sum = calculate_score(computer_cards)
 
-    player_cards_sum = sum(player_cards)
+    player_cards_sum = calculate_score(player_cards)
     winner = find_winner(player_cards_sum, computer_cards_sum)
-    print(f'Computer cards: {computer_cards}, Player cards: {player_cards}')
-    print(f'Player sum: {player_cards_sum}, Machine sum: {computer_cards_sum}, Result: {winner}')
-    break
+    
+    print('-----------------------------------')
+    print(f'Machine cards: {computer_cards} - Sum: {computer_cards_sum}')
+    print(f'Player cards: {player_cards} - Sum: {player_cards_sum}')
+
+    print('+++++++++++++++++++++++++++++++++++')
+    print(f'++ Result: {winner}           ++')
+    print('+++++++++++++++++++++++++++++++++++')
+
+    print('-----------------------------------')
+
+    aswr = input('Want to play again ? (y/n): ').lower()
+    
+    play_again = True if aswr == 'y' else False
